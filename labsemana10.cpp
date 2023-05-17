@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 using namespace std;
 
 struct Node {
@@ -31,11 +32,9 @@ Node* insert(Node* root, int data){ // ejercicio 2
 }
 
 void printTree_in_order(Node* root){ 
-	
 	if (root == NULL) {
 		return;
 	}
-	
 	printTree_in_order(root->left);
 	cout << root->data << " ";
 	printTree_in_order(root->right);
@@ -56,10 +55,42 @@ void printTree_post_order(Node* root){
 	if (root == NULL) {
 		return;
 	}
-	printTree_in_order(root->left);
-	printTree_in_order(root->right);
+	printTree_post_order(root->left);
+	printTree_post_order(root->right);
 	cout << root->data << " ";
-	
+}
+
+void depthFirstSearch(Node* root) {
+    if (root == NULL) {
+        return;
+    }
+    cout << root->data << " ";
+    depthFirstSearch(root->left);
+    depthFirstSearch(root->right);
+}
+
+void breadthFirstSearch(Node* root) {
+    if (root == NULL) {
+        return;
+    }
+    
+    queue<Node*> q;
+    q.push(root);
+    
+    while (!q.empty()) {
+        Node* current = q.front();
+        q.pop();
+        
+        cout << current->data << " ";
+        
+        if (current->left != NULL) {
+            q.push(current->left);
+        }
+        
+        if (current->right != NULL) {
+            q.push(current->right);
+        }
+    }
 }
 
 int main(){
@@ -103,21 +134,31 @@ int main(){
 	cout << endl;
 	cout << "post-Order: ";
 	printTree_post_order(node1);
-	
+	cout << endl;
 	
 	//ejercicio 5
 	
-	Node* rootejer5 = NULL;
+	Node* root = NULL;	
+	int arreglo[10] ={21, 18, 6, 9, 10, 7, 19, 15, 12, 5};
 	
-	int Arreglo[10] ={21, 18, 6, 9, 10, 7, 19, 15, 12, 5};
+	for (int i = 0; i < 10; i++) {
+        root = insert(root, arreglo[i]);
+    }
 	
-	for(int i = 0; i < 10; i++){
-		Node* ejer5 = new Node;
-		//ejer5->left = 
-	}
-	
-	
-	
+	cout << "ejercicio 5 ordenado: ";
+    printTree_in_order(root);
+    cout << endl;
+    
+    //ejercicio 6
+	cout << "Depth First Search: ";
+    depthFirstSearch(root);
+    cout << endl;
+    
+    //ejercicio 7
+    cout << "Breadth-First Search: ";
+    breadthFirstSearch(root);
+    cout << endl;
+
 	
 	
 	
